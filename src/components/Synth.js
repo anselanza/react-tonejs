@@ -2,6 +2,14 @@ import Tone from 'tone';
 
 import React from 'react';
 import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+
+const styles = theme => ({
+    button: {
+      margin: theme.spacing.unit,
+    }
+  });
 
 class Synth extends React.Component {
 
@@ -38,14 +46,23 @@ class Synth extends React.Component {
     }
 
     render() {
-      return (
-        <div className="Synth">
-            <h1>Simple Synth</h1>
-            <Button variant="contained" onClick={this.triggerAttack}>play note</Button>
-            <Button variant="contained" onClick={this.triggerRelease}>release note</Button>
-        </div>
-      );
+        const { classes } = this.props;
+        return (
+            <div className="Synth">
+                <h1>Simple Synth</h1>
+                <Button variant="contained" onClick={this.triggerAttack} className={classes.button}>
+                    play note
+                </Button>
+                <Button variant="contained" onClick={this.triggerRelease} className={classes.button}>
+                    release note
+                </Button>
+            </div>
+        );
     }
   }
+
+  Synth.propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
   
-  export default Synth;
+  export default withStyles(styles)(Synth);
