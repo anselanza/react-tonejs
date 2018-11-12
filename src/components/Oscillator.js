@@ -23,23 +23,25 @@ const styles = theme => ({
 class Oscillator extends React.Component {
 
     state = {
-        synth: null
-    }
-
-    super(props) {
-        this.startOscillator = this.startOscillator.bind(this);
-        this.stopOscillator = this.stopOscillator.bind(this);
-    }
-
-    componentDidMount = () => {
-        const synth = new Tone.Oscillator({
+        synth: new Tone.Oscillator({
             frequency: 440,
             volume: -10
-        }).toMaster();
-        this.setState({ synth }, () => {
-            this.state.synth.start();
-        });
-        // Tone.Master.volume = -Infinity;
+        }),
+        frequency: 440
+    }
+
+    handleChange = (event, value) => {
+        let synth = { ...this.state.synth };
+        // synth.set('frequency',  );
+        this.setState( { frequency: value }, () => {
+            synth.frequency.rampTo(this.state.frequency, 0.05);
+        })
+    };
+
+    componentDidMount = () => {
+        const synth = this.state.synth;
+        synth.toMaster();
+        synth.start();
         Tone.Master.mute = true;
     }
 
@@ -53,8 +55,20 @@ class Oscillator extends React.Component {
 
     render = () => {
         const { classes } = this.props;
+        const { frequency } = this.state;
         return (
-            <div>
+            <div className="classes.root">
+                <div>
+                    <Typography id="label">Frequency: {frequency}</Typography>
+                    <Slider
+                        classes={{ container: classes.slider }}
+                        value={frequency}
+                        onChange={this.handleChange}
+                        min = {20}
+                        max = {10000}
+                    />
+                </div>
+
                 <Button variant="contained" onClick={this.startOscillator} className={classes.button}>
                     start
                     </Button>
