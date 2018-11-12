@@ -1,31 +1,44 @@
 import React from 'react';
 
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/lab/Slider';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
 import Tone from 'tone';
 
 const styles = theme => ({
+    root: {
+        width: 300,
+    },
+        slider: {
+        padding: '22px 0px',
+    },
     button: {
       margin: theme.spacing.unit,
     }
   });
 
 class Oscillator extends React.Component {
+
+    state = {
+        synth: null
+    }
+
     super(props) {
-        this.synth = null;
         this.startOscillator = this.startOscillator.bind(this);
         this.stopOscillator = this.stopOscillator.bind(this);
-
     }
 
     componentDidMount = () => {
-        this.synth = new Tone.Oscillator({
+        const synth = new Tone.Oscillator({
             frequency: 440,
             volume: -10
         }).toMaster();
-        this.synth.start();
+        this.setState({ synth }, () => {
+            this.state.synth.start();
+        });
         // Tone.Master.volume = -Infinity;
         Tone.Master.mute = true;
     }
