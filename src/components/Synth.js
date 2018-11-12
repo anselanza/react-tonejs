@@ -1,21 +1,12 @@
 import Tone from 'tone';
 
-import React, { Component } from 'react';
+import React from 'react';
+import Button from '@material-ui/core/Button';
 
-class Synth extends Component {
+class Synth extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.synth = null;
-        this.startOsc = this.startOsc.bind(this);
-    }
-
-    startOsc() {
-        this.synth.triggerAttack("C4");
-    }
-
-    componentDidMount() {
-        this.synth = new Tone.Synth({
+    state = {
+        synth: new Tone.Synth({
             oscillator: {
                 type: "amtriangle",
                 harmonicity: 0.5,
@@ -26,16 +17,32 @@ class Synth extends Component {
                 attack: 0.05,
                 decay: 0.2,
                 sustain: 0.2,
-                release: 1.5
+                release: 1.8
             },
             portomento: 0.05
-        }).toMaster();
+        })
+    }
+
+    triggerAttack = (event, value) => {
+        this.state.synth.triggerAttack("C4");
+    }
+
+    triggerRelease = (event, value) => {
+        this.state.synth.triggerRelease();
+    }
+
+
+    componentDidMount() {
+        const synth = this.state.synth;
+        synth.toMaster();
     }
 
     render() {
       return (
         <div className="Synth">
-            <button onClick={this.startOsc}>play note</button>
+            <h1>Simple Synth</h1>
+            <Button variant="contained" onClick={this.triggerAttack}>play note</Button>
+            <Button variant="contained" onClick={this.triggerRelease}>release note</Button>
         </div>
       );
     }

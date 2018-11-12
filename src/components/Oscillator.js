@@ -23,7 +23,7 @@ const styles = theme => ({
 class Oscillator extends React.Component {
 
     state = {
-        synth: new Tone.Oscillator({
+        osc: new Tone.Oscillator({
             frequency: 440,
             volume: -10
         }),
@@ -31,26 +31,27 @@ class Oscillator extends React.Component {
     }
 
     handleChange = (event, value) => {
-        let synth = { ...this.state.synth };
-        // synth.set('frequency',  );
+        let osc = { ...this.state.osc };
+        // osc.set('frequency',  );
         this.setState( { frequency: value }, () => {
-            synth.frequency.rampTo(this.state.frequency, 0.05);
+            osc.frequency.rampTo(this.state.frequency, 0.05);
         })
     };
 
     componentDidMount = () => {
-        const synth = this.state.synth;
-        synth.toMaster();
-        synth.start();
-        Tone.Master.mute = true;
+        const osc = this.state.osc;
+        osc.toMaster();
+        osc.start();
+        this.state.osc.mute = true;
+        // Tone.Master.mute = true;
     }
 
     startOscillator = () => {
-        Tone.Master.volume.rampTo(0, 0.05);
+        this.state.osc.volume.rampTo(0, 0.05);
     }
 
     stopOscillator = () => {
-        Tone.Master.volume.rampTo(-Infinity, 0.05);
+        this.state.osc.volume.rampTo(-Infinity, 0.05);
     }
 
     render = () => {
@@ -58,6 +59,7 @@ class Oscillator extends React.Component {
         const { frequency } = this.state;
         return (
             <div className="classes.root">
+                <h1>Simple Sine Oscillator</h1>
                 <div>
                     <Typography id="label">Frequency: {frequency}</Typography>
                     <Slider
