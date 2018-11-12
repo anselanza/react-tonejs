@@ -30,12 +30,20 @@ class FMSynth extends React.Component {
         })
     }
 
-    triggerAttack = (event, value) => {
-        this.state.synth.triggerAttack("C4");
+    triggerAttack = () => {
+        const freq = Math.round(Math.random() * 3000);
+        this.state.synth.triggerAttack(freq);
     }
 
-    triggerRelease = (event, value) => {
+    triggerRelease = () => {
         this.state.synth.triggerRelease();
+    }
+
+    randomModulatorFrequency = () => {
+        const freq = Math.round(Math.random() * 1000);
+        console.log('mod freq to', freq);
+        const modulator = this.state.synth.modulation;
+        modulator.frequency.rampTo(freq, 1);
     }
 
 
@@ -54,6 +62,9 @@ class FMSynth extends React.Component {
                 </Button>
                 <Button variant="contained" onClick={this.triggerRelease} className={classes.button}>
                     release note
+                </Button>
+                <Button variant="contained" onClick={this.randomModulatorFrequency} className={classes.button}>
+                    random mod freq
                 </Button>
             </div>
         );
