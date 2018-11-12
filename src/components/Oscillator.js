@@ -42,8 +42,7 @@ class Oscillator extends React.Component {
         const osc = this.state.osc;
         osc.toMaster();
         osc.start();
-        this.state.osc.mute = true;
-        // Tone.Master.mute = true;
+        osc.mute = true;
     }
 
     startOscillator = () => {
