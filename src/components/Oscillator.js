@@ -73,10 +73,10 @@ class Oscillator extends React.Component {
 
                 <Button variant="contained" onClick={this.startOscillator} className={classes.button}>
                     start
-                    </Button>
+                </Button>
                 <Button variant="contained" onClick={this.stopOscillator} className={classes.button}>
                     stop
-                    </Button>
+                </Button>
             </div>
 
         )
