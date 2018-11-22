@@ -15,7 +15,8 @@ class FMSynth extends React.Component {
 
     state = {
         synth: new Tone.FMSynth({
-            modulationIndex: 12,
+            modulationIndex: 30,
+            harmonicity: 1,
             envelope : {
 				attack : 0.01,
 				decay : 0.2
@@ -24,14 +25,15 @@ class FMSynth extends React.Component {
 				type : "square"
 			},
 			modulationEnvelope : {
-				attack : 0.2,
+				attack : 0.5,
 				decay : 0.01
 			}
         })
     }
 
     triggerAttack = () => {
-        const freq = Math.round(Math.random() * 3000);
+        // const freq = Math.round(Math.random() * 3000);
+        const freq = "C3";
         this.state.synth.triggerAttack(freq);
     }
 
@@ -40,7 +42,7 @@ class FMSynth extends React.Component {
     }
 
     randomModulatorFrequency = () => {
-        const freq = Math.round(Math.random() * 1000);
+        const freq = Math.round(Math.random() * 800);
         console.log('mod freq to', freq);
         const modulator = this.state.synth.modulation;
         modulator.frequency.rampTo(freq, 1);
