@@ -4,6 +4,7 @@ import './App.css';
 import Synth from './components/Synth';
 import Oscillator from './components/Oscillator';
 import FMSynth from './components/FMSynth';
+import LFOMod from './components/LFOMod';
 
 class App extends Component {
   render() {
@@ -12,6 +13,7 @@ class App extends Component {
         <Oscillator />
         <Synth />
         <FMSynth />
+        <LFOMod />
       </div>
     );
   }
